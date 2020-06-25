@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.OleDb;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,13 +17,30 @@ namespace CperusteetHarjoitus1henkiloTiedot
     {
         static void Main(string[] args)
         {
-            string nimi, osoite, postinumero, postitoimipaikka, sukupuoli, puhelinnumero, sahkoposti; //luodaan string-tyyppiset muuttujat
+            CultureInfo culture = new CultureInfo("en-US");
+            string nimi, osoite, postinumero, postitoimipaikka, sukupuoli, puhelinnumero, sahkoposti, ikaluokka; //luodaan string-tyyppiset muuttujat
             int ika; //luodaan int-tyyppinen muuttuja
+            DateTime tanaan = DateTime.Today; //luodaan DateTime-muuttuja. Today ei sisällä kellonaikaa, .Now sisältäisi
+
+            Console.WriteLine("Henkilötietosovellus, harjoitustehtävä 1. Tänään on: " + tanaan.ToString("d", culture)); //CultureInfo-tieto annetaan parametrinä
 
             Console.Write("Kerro nimesi: "); //kysytään käyttäjältä tiedot
             nimi = Console.ReadLine(); //tallennetaan käyttäjän syöttämä tieto muuttujaan
             Console.Write("Kerro ikäsi: ");
             ika = int.Parse(Console.ReadLine()); //muunnetaan käyttäjän syöttämä tieto int-tyyppiseksi (syöte on aina teksti- eli string-tyyppiä) ja tallennetaan muuttujaan
+            if (ika < 7)
+            {
+                ikaluokka = "Olet alle kouluikäinen.";
+            } else if (ika < 18)
+            {
+                ikaluokka = "Olet alaikäinen";
+            } else if (ika < 66)
+            {
+                ikaluokka = "Olet työikäinen";
+            } else
+            {
+                ikaluokka = "Olet eläkkeellä";
+            }
             Console.Write("Kerro osoitteesi: ");
             osoite = Console.ReadLine();
             Console.Write("Kerro postinumerosi: ");
@@ -39,7 +58,7 @@ namespace CperusteetHarjoitus1henkiloTiedot
 
             Console.WriteLine();
             Console.WriteLine("***************");
-            Console.WriteLine("Hei " + nimi + "!" + " Olet " + ika.ToString() + "-vuotias " + sukupuoli + "." + "\r\n"
+            Console.WriteLine("Hei " + nimi + "!" + " Olet " + ika.ToString() + "-vuotias " + sukupuoli + ". " + ikaluokka + ". " + "\r\n"
                 + "Osoitetietosi ovat:" + "\r\n" + osoitetiedot
                 + "\r\n" + puhelinnumero + "\r\n" + sahkoposti); //konkatenoidaan tallennetut tiedot tulosteeseen
             Console.WriteLine("***************");
