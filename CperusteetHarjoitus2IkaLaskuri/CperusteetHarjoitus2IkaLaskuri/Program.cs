@@ -24,7 +24,7 @@ namespace CperusteetHarjoitus2IkaLaskuri
             syntymaAikaDT = DateTime.Parse(syntymaAika); //jos käyttäjän syöttämä tieto on oikeassa muodossa, tämä muuntaa sen päivämääräksi
             //Lasketaan päivämäärien erotus. Huom: tanaan-muuttuja on DateTime-tyyppinen, joten toisenkin käytettävän muuttujan pitää olla DateTime eli käytetään syntymaAikaDT-muuttujaa, johon yllä muunnettiin käyttäjän syöttämä tieto
             aikaEro = tanaan.Subtract(syntymaAikaDT).Days; //tallennetaan aikaEro muuttujan arvoksi tanaan-muuttujan ja syntymaAikaDT-muuttujan erotus päivinä
-            Console.WriteLine("Olet " + aikaEro.ToString() + " päivää vanha");
+            Console.WriteLine("Olet " + aikaEro.ToString() + " päivää vanha"); //tulostetaan konsolille laskennan tulos aikaEro muutettuna string-muotoon.
             Console.ReadLine();
         }
     }
