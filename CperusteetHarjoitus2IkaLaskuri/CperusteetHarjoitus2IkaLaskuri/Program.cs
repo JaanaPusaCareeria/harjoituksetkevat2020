@@ -24,10 +24,19 @@ namespace CperusteetHarjoitus2IkaLaskuri
             Console.WriteLine("Anna alkuaika muodossa VVVV.KK.PP HH:mm:ss");
             alkuAika = Console.ReadLine(); //sijoitetaan string-muuttuja syntymaAikaan käyttäjän syöttämä syntymäaika. HUOM! Se on string-muodossa, kuten käyttäjän syöte aina.
             //Muutetaan yllä saatu string-tyyppinen tieto päivämääräksi:
-            syntymaAikaDT = DateTime.ParseExact(alkuAika, formaatti, kulttuuri); //Muunnetaan käyttäjän syöttämä päivämäärä oikeaan muotoon. ParseExact tarvitsee useamman parametrin, ensin muunnettava string-muuttuja, sitten formaatti, missä tieto tulee ja sitten CultureInfo
-            //Lasketaan päivämäärien erotus. Huom: tanaan-muuttuja on DateTime-tyyppinen, joten toisenkin käytettävän muuttujan pitää olla DateTime eli käytetään syntymaAikaDT-muuttujaa, johon yllä muunnettiin käyttäjän syöttämä tieto
-            aikaEro = tanaan.Subtract(syntymaAikaDT).TotalHours; //tallennetaan aikaEro muuttujan arvoksi tanaan-muuttujan ja syntymaAikaDT-muuttujan erotus
-            Console.WriteLine("Päivämäärien/aikojen erotus on " + aikaEro.ToString()); //tulostetaan konsolille laskennan tulos aikaEro muutettuna string-muotoon.
+            //Lisätään try-catch -käsittely
+            try //try-catchia käytetään virheen käsittelyyn
+            {
+                //tätä ohjelma yrittää tehdä
+                syntymaAikaDT = DateTime.ParseExact(alkuAika, formaatti, kulttuuri); //Muunnetaan käyttäjän syöttämä päivämäärä oikeaan muotoon. ParseExact tarvitsee useamman parametrin, ensin muunnettava string-muuttuja, sitten formaatti, missä tieto tulee ja sitten CultureInfo
+                //Lasketaan päivämäärien erotus. Huom: tanaan-muuttuja on DateTime-tyyppinen, joten toisenkin käytettävän muuttujan pitää olla DateTime eli käytetään syntymaAikaDT-muuttujaa, johon yllä muunnettiin käyttäjän syöttämä tieto
+                aikaEro = tanaan.Subtract(syntymaAikaDT).TotalHours; //tallennetaan aikaEro muuttujan arvoksi tanaan-muuttujan ja syntymaAikaDT-muuttujan erotus
+                Console.WriteLine("Päivämäärien/aikojen erotus on " + aikaEro.ToString()); //tulostetaan konsolille laskennan tulos aikaEro muutettuna string-muotoon.
+            }
+            catch (Exception) //jos ohjelma menee virheeseen, tapahtuu näin:
+            {
+                Console.WriteLine("Ohjelma ei osannut laskea päivämääräerotusta. Tarkista pvm-formaatti!"); //eli tulee tämä itse muotoiltu virheilmoitus
+            }
             Console.ReadLine();
         }
     }
