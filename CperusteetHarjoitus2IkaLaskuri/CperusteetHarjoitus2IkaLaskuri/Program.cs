@@ -33,9 +33,10 @@ namespace CperusteetHarjoitus2IkaLaskuri
                 aikaEro = tanaan.Subtract(syntymaAikaDT).TotalHours; //tallennetaan aikaEro muuttujan arvoksi tanaan-muuttujan ja syntymaAikaDT-muuttujan erotus
                 Console.WriteLine("Päivämäärien/aikojen erotus on " + aikaEro.ToString()); //tulostetaan konsolille laskennan tulos aikaEro muutettuna string-muotoon.
             }
-            catch (Exception) //jos ohjelma menee virheeseen, tapahtuu näin:
+            catch (Exception ee) //Muodostettu exceptionista oma objekti. Jos ohjelma menee virheeseen, tapahtuu näin:
             {
                 Console.WriteLine("Ohjelma ei osannut laskea päivämääräerotusta. Tarkista pvm-formaatti!"); //eli tulee tämä itse muotoiltu virheilmoitus
+                Console.WriteLine(ee.Message); //Tulostetaan konsolille Exceptionin sisältämä message
             }
             Console.ReadLine();
         }
