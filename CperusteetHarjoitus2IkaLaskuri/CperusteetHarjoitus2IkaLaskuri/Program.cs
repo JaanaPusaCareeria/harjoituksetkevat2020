@@ -16,9 +16,9 @@ namespace CperusteetHarjoitus2IkaLaskuri
         {
             Double aikaJaljella = 0; //Double-tyyppisessä muuttujassa on desimaalit mukana
             int elinIanOdote = 0;
-            string alkuAika = "", sp="";
+            string alkuAika = "", sp="", vuodetKuukaudetPaivat = "";
             DateTime syntymaAikaDT, elinianOdotusDT; //tähän muuttujaan tallennetaan käyttäjän syöttämä aika
-            DateTime tanaan = DateTime.Now; //tähän muuttujaan annetaan arvoksi kuluva ajanhetki. DateTime.Now sisältää kellonajan, DateTime.Today:ssä olisi vain päivämäärä
+            DateTime tanaan = DateTime.Today; //tähän muuttujaan annetaan arvoksi kuluva ajanhetki. DateTime.Now sisältää kellonajan, DateTime.Today:ssä olisi vain päivämäärä
             string formaatti = "dd.MM.yyyy"; //luodaan string-apumuuttuja -formaatti, jossa kerrotaan, missä muodossa päivämäärätieto tulee käyttäjältä.
             CultureInfo kulttuuri = CultureInfo.InvariantCulture; //luodaan CultureInfo
 
@@ -51,7 +51,8 @@ namespace CperusteetHarjoitus2IkaLaskuri
                 elinianOdotusDT = syntymaAikaDT.AddYears(elinIanOdote); //lisätään syntymäaikaan eliniän odote AddYears-metodilla, jolle annetaan parametriksi int elinIanOdote
                 //Lasketaan päivämäärien erotus. Huom: molempien muuttujien oltava DateTime-tyyppisiä jotta laskenta voidaan tehdä
                 aikaJaljella = elinianOdotusDT.Subtract(tanaan).TotalDays; //Vähennetään elinianOdotusDT-muuttujasta tänään eli DateTime.Now -arvo.
-                
+                DateTime paivat = new DateTime(new TimeSpan((int)aikaJaljella+1, 0, 0, 0).Ticks); //luodaan DateTime-olio, joka on samalla Timespan-olio jolle annetaan parametriksi int-muotoon castattu aikaJaljella-double.
+                vuodetKuukaudetPaivat = string.Format("{0} vuotta {1} kuukautta ja {2} päivää", paivat.Year-1, paivat.Month-1, paivat.Day-1); //tähän otetaan parametriksi paivat, koska sinne sijoitettiin TimeSpaniin aikaJaljella
             }
             catch (Exception ee) //Muodostettu exceptionista oma objekti. Jos ohjelma menee virheeseen, tapahtuu näin:
             {
@@ -59,7 +60,7 @@ namespace CperusteetHarjoitus2IkaLaskuri
                 Console.WriteLine(ee.Message); //Tulostetaan konsolille Exceptionin sisältämä message
                 aikaJaljella = 0;
             }
-            Console.WriteLine("Päivämäärien/aikojen erotus on " + aikaJaljella.ToString()); //tulostetaan konsolille laskennan tulos aikaEro muutettuna string-muotoon.
+            Console.WriteLine("Odotettua elinaikaa jäljellä " + vuodetKuukaudetPaivat + ".");
             Console.ReadLine();
         }
     }
