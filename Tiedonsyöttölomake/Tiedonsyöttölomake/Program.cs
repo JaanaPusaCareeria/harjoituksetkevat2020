@@ -29,6 +29,8 @@ namespace Tiedonsyöttölomake
 
             Console.WriteLine("Tiedot ovat: " + "\r\n" + etunimi + " " + sukunimi + "\r\n" + osoite + "\r\n" + postinumero + " " + postitoimipaikka
                 + "\r\n" + puhelinnumero + "\r\n" + sahkoposti);
+
+
             Console.ReadLine();
         }
     }
