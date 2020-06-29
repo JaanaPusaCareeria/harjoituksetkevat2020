@@ -10,13 +10,39 @@ namespace CperusteetHarjoitus2IkaLaskuri
 
     //Tehdään laskuri, joka laskee eletyn ajanhetken ja käyttäjän syöttämän ajan erotuksen.
     //Laskuri antaa sukupuolen ja annetun syntymäpäivän perusteella eliniän ennusteen.
+    //Muunna ensin tehty rutiini omaksi alirutiinikseen. Lisää Main-ohjelmalohkoon silmukka, joka kysyy halutaanko ikälaskenta suorittaa uudelleen.
+    //Jos halutaan, kutsutaan luotua alirutiinia. Jos ei haluta, ohjelma lopetetaan.
+    //Lisää ikälaskuriin värit: jos sukupuoleksi annetaan M, tekstin taustaväriksi laitetaan sininen ja jos N, laitetaan punainen.
+    //Jäljellä olevan eliniän mukaan: ikää jäljellä > 20 vuotta, tausta green, fontti black; ikää jäljellä < 20 vuotta, tausta blue, fontti darkyellow; 
+    //ikää jäljellä < 2 vuotta, tausta DarkRed, fontti white sekä lisäksi annetaan piippaus.
     class Program
     {
         static void Main(string[] args)
         {
+            Boolean jatka = true;
+
+            while (jatka == true)
+            {
+            Console.WriteLine("Haluatko suorittaa ikälaskennan? K=Kyllä/E=Ei");
+            if (Console.ReadLine().ToUpper() == "E")
+                {
+                    jatka = false;
+                } else
+                {
+                    jatka = true;
+                    IanLaskenta();
+                }
+            } 
+
+            Console.ReadLine();
+            
+        }
+
+        private static void IanLaskenta()
+        {
             Double aikaJaljella = 0; //Double-tyyppisessä muuttujassa on desimaalit mukana
             int elinIanOdote = 0;
-            string alkuAika = "", sp="", vuodetKuukaudetPaivat = "";
+            string alkuAika = "", sp = "", vuodetKuukaudetPaivat = "";
             DateTime syntymaAikaDT, elinianOdotusDT; //tähän muuttujaan tallennetaan käyttäjän syöttämä aika
             DateTime tanaan = DateTime.Today; //tähän muuttujaan annetaan arvoksi kuluva ajanhetki. DateTime.Now sisältää kellonajan, DateTime.Today:ssä olisi vain päivämäärä
             string formaatti = "dd.MM.yyyy"; //luodaan string-apumuuttuja -formaatti, jossa kerrotaan, missä muodossa päivämäärätieto tulee käyttäjältä.
@@ -36,7 +62,7 @@ namespace CperusteetHarjoitus2IkaLaskuri
                 default: //jos ei ole mikään yllä olevista
                     Console.WriteLine("Virheellinen valinta!");
                     elinIanOdote = 0; //ei välttämätön, koska lähtöarvoksi on syötetty jo nolla.
-                    break; 
+                    break;
             }
 
             //Pyydetään käyttäjää syöttämään syntymäaika
@@ -51,8 +77,8 @@ namespace CperusteetHarjoitus2IkaLaskuri
                 elinianOdotusDT = syntymaAikaDT.AddYears(elinIanOdote); //lisätään syntymäaikaan eliniän odote AddYears-metodilla, jolle annetaan parametriksi int elinIanOdote
                 //Lasketaan päivämäärien erotus. Huom: molempien muuttujien oltava DateTime-tyyppisiä jotta laskenta voidaan tehdä
                 aikaJaljella = elinianOdotusDT.Subtract(tanaan).TotalDays; //Vähennetään elinianOdotusDT-muuttujasta tänään eli DateTime.Now -arvo.
-                DateTime paivat = new DateTime(new TimeSpan((int)aikaJaljella+1, 0, 0, 0).Ticks); //luodaan DateTime-olio, joka on samalla Timespan-olio jolle annetaan parametriksi int-muotoon castattu aikaJaljella-double.
-                vuodetKuukaudetPaivat = string.Format("{0} vuotta {1} kuukautta ja {2} päivää", paivat.Year-1, paivat.Month-1, paivat.Day-1); //tähän otetaan parametriksi paivat, koska sinne sijoitettiin TimeSpaniin aikaJaljella
+                DateTime paivat = new DateTime(new TimeSpan((int)aikaJaljella + 1, 0, 0, 0).Ticks); //luodaan DateTime-olio, joka on samalla Timespan-olio jolle annetaan parametriksi int-muotoon castattu aikaJaljella-double.
+                vuodetKuukaudetPaivat = string.Format("{0} vuotta {1} kuukautta ja {2} päivää", paivat.Year - 1, paivat.Month - 1, paivat.Day - 1); //tähän otetaan parametriksi paivat, koska sinne sijoitettiin TimeSpaniin aikaJaljella
             }
             catch (Exception ee) //Muodostettu exceptionista oma objekti. Jos ohjelma menee virheeseen, tapahtuu näin:
             {
