@@ -54,10 +54,12 @@ namespace CperusteetHarjoitus2IkaLaskuri
             {
                 case "M": //jos käyttäjä on syöttänyt M. Pitää olla lainausmerkit, koska on string eikä char.
                     elinIanOdote = 78; //int-muuttuja elinIanOdote on 78
+                    Console.BackgroundColor = ConsoleColor.Blue;
                     break;
 
                 case "N": //jos käyttäjä on syöttänyt N
                     elinIanOdote = 84;
+                    Console.BackgroundColor = ConsoleColor.Red;
                     break;
                 default: //jos ei ole mikään yllä olevista
                     Console.WriteLine("Virheellinen valinta!");
@@ -77,8 +79,27 @@ namespace CperusteetHarjoitus2IkaLaskuri
                 elinianOdotusDT = syntymaAikaDT.AddYears(elinIanOdote); //lisätään syntymäaikaan eliniän odote AddYears-metodilla, jolle annetaan parametriksi int elinIanOdote
                 //Lasketaan päivämäärien erotus. Huom: molempien muuttujien oltava DateTime-tyyppisiä jotta laskenta voidaan tehdä
                 aikaJaljella = elinianOdotusDT.Subtract(tanaan).TotalDays; //Vähennetään elinianOdotusDT-muuttujasta tänään eli DateTime.Now -arvo.
+                if (aikaJaljella > 20)
+                {
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                }
+                else if (aikaJaljella < 20)
+                {
+                    Console.BackgroundColor = ConsoleColor.Blue;
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                }
+                else if (aikaJaljella < 2)
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Beep();
+                }
+
                 DateTime paivat = new DateTime(new TimeSpan((int)aikaJaljella + 1, 0, 0, 0).Ticks); //luodaan DateTime-olio, joka on samalla Timespan-olio jolle annetaan parametriksi int-muotoon castattu aikaJaljella-double.
+
                 vuodetKuukaudetPaivat = string.Format("{0} vuotta {1} kuukautta ja {2} päivää", paivat.Year - 1, paivat.Month - 1, paivat.Day - 1); //tähän otetaan parametriksi paivat, koska sinne sijoitettiin TimeSpaniin aikaJaljella
+
             }
             catch (Exception ee) //Muodostettu exceptionista oma objekti. Jos ohjelma menee virheeseen, tapahtuu näin:
             {
@@ -88,6 +109,7 @@ namespace CperusteetHarjoitus2IkaLaskuri
             }
             Console.WriteLine("Odotettua elinaikaa jäljellä " + vuodetKuukaudetPaivat + ".");
             Console.ReadLine();
+            Console.ResetColor();
         }
     }
 }
