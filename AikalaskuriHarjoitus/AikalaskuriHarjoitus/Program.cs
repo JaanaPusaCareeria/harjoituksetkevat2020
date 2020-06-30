@@ -10,6 +10,7 @@ namespace AikalaskuriHarjoitus
     {
         //Tee konsolisovellus, joka kysyy käyttäjältä kaksi päivämäärää kellonaikoineen ja laskee niiden erotuksen minuuteissa.
         //Tulos näytetään konsolilla ja rutiini laitetaan silmukan sisään, jotta käyttäjän on helppo syöttää uudet arvot ja laskea uusi erotus.
+        //KESKEN
         static void Main(string[] args)
         {
             string paiva1, paiva2;
