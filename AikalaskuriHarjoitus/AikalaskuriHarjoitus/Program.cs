@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace AikalaskuriHarjoitus
         //Tulos näytetään konsolilla ja rutiini laitetaan silmukan sisään, jotta käyttäjän on helppo syöttää uudet arvot ja laskea uusi erotus.
         //Muutettu laskenta-rutiini omaksi alirutiinikseen
         //Lisätty while-silmukka ja sinne laskennan kutsu sekä try-catch virheen käsittely laskentarutiiniin
-        //Päivämääräformaatti? 
+        //Lisätty pyydetylle päivämäärälle formaattimääritys, joka vaatii tietynlaisen syötön ja sen myötä muutettu DateTime.Parse DateTime.ParseExacticsi.
         static void Main(string[] args)
         {
             Laskenta(); //kutsuu laskenta-alirutiinia, joka käydään läpi kerran ennen siirtymistä while-silmukkaan
@@ -36,15 +37,17 @@ namespace AikalaskuriHarjoitus
         {
             string paiva1, paiva2;
             Double paivienErotus = 0;
+            string pvmformaatti = "dd.MM.yyyy HH:mm.ss"; //lisätty formaatti sille, missä muodossa tieto tulee käyttäjältä jolloin ohjelma hyväksyy tiedot vain, jos niissä on myös kellonaika
+            CultureInfo kulttuuri = CultureInfo.InvariantCulture;
 
-            Console.WriteLine("Anna ensimmäinen päivämäärä muodossa dd.MM.yyyy"); //kysytään käyttäjältä päivämäärä kellonaikoineen
+            Console.WriteLine("Anna ensimmäinen päivämäärä ja kellonaika muodossa dd.MM.yyyy HH:mm.ss"); //kysytään käyttäjältä päivämäärä kellonaikoineen
             paiva1 = Console.ReadLine(); //asetetaan konsolilta luettu arvo paiva1 muuttujaan
             try
             {
-                DateTime paiva1DT = DateTime.Parse(paiva1); //muutetaan konsolilta saatu tieto DateTime.Parsella DateTime-tyyppiseksi paiva1DT-muuttujaksi
-                Console.WriteLine("Anna toinen päivämäärä muodossa dd.MM.yyyy"); //perusasetus ei vaadi kellonajalle muuta formaattia, hyväksyy sen tälläisenään.
+                DateTime paiva1DT = DateTime.ParseExact(paiva1, pvmformaatti, kulttuuri);
+                Console.WriteLine("Anna toinen päivämäärä ja kellonaika muodossa dd.MM.yyyy HH:mm.ss"); 
                 paiva2 = Console.ReadLine();
-                DateTime paiva2DT = DateTime.Parse(paiva2);
+                DateTime paiva2DT = DateTime.ParseExact(paiva2, pvmformaatti, kulttuuri); //Muunnetaan paiva1 ParseExactilla DateTime-tyyppiseksi. ParseExact hyödyntää parametrinä formaattitietoa ja CultureInfoa.
                 paivienErotus = paiva1DT.Subtract(paiva2DT).TotalMinutes; //tallennetaan paiva1DT:n ja paiva2DT:n erotus double-tyyppiseen muuttujaan paivienErotus.
                 Console.WriteLine("Päivämäärien erotus on {0} minuuttia.", paivienErotus.ToString()); //tulostetaan laskettu erotus konsolille
         }
