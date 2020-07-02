@@ -15,6 +15,8 @@ namespace CperusteetHarjoitus2IkaLaskuri
     //Lisää ikälaskuriin värit: jos sukupuoleksi annetaan M, tekstin taustaväriksi laitetaan sininen ja jos N, laitetaan punainen.
     //Jäljellä olevan eliniän mukaan: ikää jäljellä > 20 vuotta, tausta green, fontti black; ikää jäljellä < 20 vuotta, tausta blue, fontti darkyellow; 
     //ikää jäljellä < 2 vuotta, tausta DarkRed, fontti white sekä lisäksi annetaan piippaus.
+    //ENNEN tarkistusta: laskuri toimii, eliniän ennusteen antaminen sukupuolen perusteella toimii. Alirutiini ja silmukka toimii. Sukupuolen kohdalla väri vaihtuu oikein.
+    //Värin vaihto iän/ikäluokituksen mukaan ei toimi, kaikille tulee taustaväriksi vihreä ja fontiksi musta.
     class Program
     {
         static void Main(string[] args)
@@ -33,9 +35,6 @@ namespace CperusteetHarjoitus2IkaLaskuri
                     IanLaskenta();
                 }
             } 
-
-            Console.ReadLine();
-            
         }
 
         private static void IanLaskenta()
@@ -94,6 +93,10 @@ namespace CperusteetHarjoitus2IkaLaskuri
                     Console.BackgroundColor = ConsoleColor.DarkRed;
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Beep();
+                } else
+                {
+                    Console.WriteLine("Erotusta ei voitu laskea");
+                    Console.ResetColor();
                 }
 
                 DateTime paivat = new DateTime(new TimeSpan((int)aikaJaljella + 1, 0, 0, 0).Ticks); //luodaan DateTime-olio, joka on samalla Timespan-olio jolle annetaan parametriksi int-muotoon castattu aikaJaljella-double.
